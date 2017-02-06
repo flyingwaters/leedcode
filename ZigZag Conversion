@@ -1,0 +1,37 @@
+class Solution {
+    //本题我自己的解法十分繁琐，没有任何编程之美
+    //故而使用欣赏解法
+public:
+string convert(string s, int nRows) {
+   if (nRows <= 1)
+        return s;
+//测试驱动的开发来源！
+    const int len = (int)s.length();
+
+    string *str = new string[nRows];
+
+    int row = 0, step = 1;
+    for (int i = 0; i < len; ++i)
+    {
+        str[row].push_back(s[i]);
+
+        if (row == 0)
+            step = 1;
+        else if (row == nRows - 1)
+            step = -1;
+
+        row += step;
+    }
+//如何实现zigzag？把一串字符形成各种形式来存储应该为基本功，触发器row行做触发器的思想，row到达nRows-1开始为--1；row到达0为//++1使用step来实现代码优美实用！！！！
+    s.clear();
+    
+    //
+    for (int j = 0; j < nRows; ++j)
+    {
+        s.append(str[j]);
+    }
+   //append()为string函数可以尝试使用
+    delete[] str;
+    return s;
+}
+};
