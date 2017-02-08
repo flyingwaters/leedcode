@@ -118,4 +118,4 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         else return (max(L1,L2) + min(R1, R2)) / 2;	// Otherwise, that's the right cut.
     }
     return -1;
-} 
+} ;//切割方法如下，切割空位或者数本身，Array1-left+Array2—left==sum-right；切本身时利用左》右易得4即为左尤伟右中位数为切割数，两个切割数易得为他两之平均数。可以看做分为两数进入。
