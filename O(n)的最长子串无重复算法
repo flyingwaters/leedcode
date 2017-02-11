@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+int lengthOfLongestSubstring(string s) {
+        vector<int> dict(256, -1);
+        ///初始化全部为start位置-1
+        int maxLen = 0, start = -1;
+        for (int i = 0; i != s.length(); i++) {
+            if (dict[s[i]] > start)///直到有相同的字符出现，返回start改为相同的前一个i----》更新到有重复字母的下一个
+                start = dict[s[i]];
+            dict[s[i]] = i;//
+            ///
+            ///这是个键值对用vector来存
+            ///若有重复的字符会被后面的i覆盖
+            ///从s[0]开始遍历,
+            maxLen = max(maxLen, i - start);//体现可行的最长字符串长度控制返回最长的值。
+            
+            //
+        }
+        return maxLen;
+    }
+    int main(){
+
+
+
+
+    }
