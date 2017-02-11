@@ -18,9 +18,4 @@ int lengthOfLongestSubstring(string s) {
         }
         return maxLen;
     }
-    int main(){
-
-
-
-
-    }
+   
