@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+        int i;
+        int l[s.length()];
+        for(i=0;i<s.length();i++)
+        {
+            if(s[i]=='I')
+            l[i]=1;
+            if(s[i]=='V')
+            l[i]=5;
+            if(s[i]=='X')
+            l[i]=10;
+            if(s[i]=='L')
+            l[i]=50;
+            if(s[i]=='C')
+            l[i]=100;
+            if(s[i]=='D')
+            l[i]=500;
+            if(s[i]=='M')
+            l[i]=1000;
+        }
+        //得到
+        int count=0;
+        if(s.length()==1)
+        return l[0];
+        i=0;
+        while(i+1<s.length())
+        {
+          if(l[i]>=l[i+1])
+              { 
+                  count=count+l[i];
+                  
+              }
+             if(l[i]<l[i+1]){
+                 count=count-l[i];
+                 
+             }
+             i++;
+        }
+    count+=l[i];
+    return count;
+        }
+};
