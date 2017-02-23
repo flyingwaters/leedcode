@@ -1,0 +1,60 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> paren;
+        for (char& c : s) {
+            switch (c) {
+                case '(': 
+                case '{': 
+                case '[': paren.push(c); break;
+                case ')': if (paren.empty() || paren.top()!='(') return false; else paren.pop(); break;
+                case '}': if (paren.empty() || paren.top()!='{') return false; else paren.pop(); break;
+                case ']': if (paren.empty() || paren.top()!='[') return false; else paren.pop(); break;
+                default: ; // pass
+            }
+        }
+        return paren.empty() ;
+    }
+};
+/////////////////////////////////////////////////////////////////////
+class Solution {
+public:
+    bool isValid(string s) {
+        //s[i]--between() must exist complete brackets！
+        //遍历由0-n 然后count1+1 index 1
+        int len=s.length();
+        int i=0;
+        stack<char> k;//1,2,3
+       
+        for(i=0;i<s.length();i++)
+        {
+            if(s[i]=='('||s[i]=='['||s[i]=='{')
+            {
+                k.push(s[i]);
+            } 
+            if(s[i]==']'){
+                if(k.size()==0){return false;}
+                else if(k.top()=='[')
+                {k.pop();}
+                else{ return false;}
+            }
+            if(s[i]==')'){
+                if(k.size()==0){return false;}
+                else if(k.top()=='(')
+                {k.pop();}
+                else{ return false;}
+            }
+            if(s[i]=='}')
+            {
+                if(k.size()==0){return false;}
+                else if(k.top()=='{')
+                {k.pop();}
+                else{ return false;}
+            }
+        }
+        cout<<k.size();
+        if(k.size()==0)
+        return true;
+        return false;
+    }
+};
