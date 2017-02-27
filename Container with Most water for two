@@ -1,0 +1,44 @@
+class Solution {
+public:
+    
+    int maxArea(vector<int>& height) {
+        /*
+        scan (low to high) assume i++ until higher one finded
+        if higher one > high replace  j--
+        remain (low to high)
+        */
+        int size=height.size();
+        int i,j;
+        i=0;
+        j=size-1;
+        int maxA=0;
+        int low=0;
+        while(i<j)
+        {
+             //
+             low=min(height[i],height[j]);
+             maxA=max(maxA,(j-i)*low);
+             while(height[i]<=low&&i<j)i++;
+             while(height[j]<=low&&i<j)j--;
+             //equal to two if 
+        }
+        return maxA;
+    }
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int maxArea(vector<int> &height) {
+        int l(0), r=height.size()-1, result(0);
+        while(l < r){
+            if(height[l] < height[r]){
+                 result =  max(result, height[l] * (r - l));
+                 int pivot = height[l++];
+                 while(l < r && height[l] <= pivot) ++l;
+            }else{
+                 result = max(result, height[r] * (r - l));
+                 int pivot = height[r--];
+                 while(l < r && height[r] <= pivot) --r;
+            }
+        }
+        return result;
+    }
+
