@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+       int size=nums.size();
+       int left=0,right=size-1;
+       if(size==0)
+       return -1;
+       if(size==1)
+       return nums[0]==target?0:-1;
+       if(nums[left]<nums[right])
+       {
+           while(left<=right)
+           {
+               int med=(left+right)/2;
+               if(nums[med]>target)
+               {
+                   right=med-1;
+               }
+               if(nums[med]==target)
+               return med;
+               if(nums[med]<target)
+               {
+                   left=med+1;
+               }
+           }
+           return -1;
+       }
+       if(nums[left]>=nums[right])
+       {
+           if(target>nums[size-1]&&target<nums[0])
+           return -1;
+           while(left<=right)
+           {
+               int med=(left+right)/2;
+               if(nums[med]>target&&target>=nums[0])
+               {
+                   right=med-1;
+               }// target med piv right-------------6 kinds
+               if(nums[med]==target)
+               return med;
+                if(nums[med]>target&&nums[med]<nums[0]&&target<=nums[size-1])
+               {
+                   right=med-1;
+               }// piv target med
+               if(target>=nums[0]&&nums[med]<target&&nums[med]<nums[0])
+               {
+                   right=med-1;
+               }//target piv med
+              if(nums[med]<target&&target<nums[0])
+              {
+                  left=med+1;
+              }//piv med target
+              if(nums[med]>target&&nums[med]>=nums[0]&&target<nums[0])
+              {
+                  left=med+1;
+              }//med piv target
+              if(nums[med]<target&&nums[med]>nums[size-1])
+              {
+                  left=med+1;
+              }//med target piv
+           }
+           return -1;
+       }
+        }
+};
