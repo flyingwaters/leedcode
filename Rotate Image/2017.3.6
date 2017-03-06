@@ -20,6 +20,7 @@ public:
             h2=m[i][end];
             h3=m[end][end-i+begin];
             h4=m[end-i+begin][begin];
+            //i作为一般情况的考虑，begin非零时；------->以begin为0作为推导来推一般的规律，很难推明白。
            m[begin][i]=h4;
            m[i][end]=h1;
            m[end][end-i+begin]=h2;
