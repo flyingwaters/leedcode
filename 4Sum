@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+    vector<vector<int>> triples;
+    sort(nums.begin(), nums.end());
+    int i = 0, last = nums.size() - 1;
+    while (i < last) {
+        if(i>=1&&nums[i]==nums[i-1]){i++;continue;}
+        int a = nums[i], k = last;
+        int j,d;
+        int p=i+1;
+       while(p<last)
+        { 
+            if(p>i+1&&nums[p]==nums[p-1]){p++;continue;}
+             d=nums[p];
+             j=p+1;k=last;
+        while (j < k)
+        {
+            int b = nums[j], c = nums[k], sum = a+b+c+d;
+            if (sum == target){triples.push_back({a, d, b, c});j++;k--;while(nums[j]==nums[j-1]&&j<k) j++;while(nums[k]==nums[k+1]&&j<k) k++;}
+          /////No duplicate quadruplets。----》i，p,j,四个层次需要skip相同的部分；
+           if (sum < target)j++;
+            if (sum > target)k--;
+        }
+        p++;
+        }
+        i++;
+    }
+    return triples;
+    }
+};
