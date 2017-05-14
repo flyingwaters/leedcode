@@ -1,0 +1,48 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+    /*分为几种情况
+    如下所示:
+    将所有情况合理的分类--->复杂情况统一处理为变更newInterval来处理的情况。
+    第一种如果newInteral.end<(*it).start---->后面所有的节点的问题全部归掉,在insert的后面。
+    第二种如果newInteral.start>(*it).start---->insert前面所有节点。
+    第三种如果newInteral.start>(*it).start---->更新出newInterval*****！更新用于下次比较
+    
+    copy 到新的 vector<Interval> ret;
+    用于return
+    {省去在vector上的变更删除问题}。
+    同样用于链表的处理。
+
+    更新newInterval 的值用于进行下一次的比较。
+    iterator it迭代器;
+    用于遍历。
+    */
+    vector<Interval> ret;
+    auto it = intervals.begin();
+    
+    for(; it!=intervals.end(); ++it){
+		if(newInterval.end < (*it).start) //all intervals after will not overlap with the newInterval
+			break; 
+		else if(newInterval.start > (*it).end) //*it will not overlap with the newInterval
+			ret.push_back(*it); 
+        else{ //update newInterval bacause *it overlap with the newInterval
+            newInterval.start = min(newInterval.start, (*it).start);
+            newInterval.end = max(newInterval.end, (*it).end);
+        }	
+    }
+    // don't forget the rest of the intervals and the newInterval
+	ret.push_back(newInterval);
+	for(; it!=intervals.end(); ++it)
+		ret.push_back(*it);
+	return ret;
+}
+};
