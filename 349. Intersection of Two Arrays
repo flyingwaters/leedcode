@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2)
+    {
+        unordered_map<int,int> i;
+        vector<int> k;
+        for(int o=0;o<nums1.size();o++)
+        {
+            if(i[nums1[o]]==0)
+            i[nums1[o]]++;
+        }
+        for(int p=0;p<nums2.size();p++)
+        {
+            if(i.find(nums2[p])!=i.end()&&--i[nums2[p]]>=0)
+                k.push_back(nums2[p]);
+        }
+        return k;
+    }
+};
+///如上次的解法，
+//参考的解法如下，底层使用BST构建的set的，是不允许重复，且排好序的。
+//s.erase(x)成功则返回一个正数，错误则返回一个负数，由于BST的查找效率低于hash_table
+//相应的算法时间会加大。
+vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+    set<int> s(nums1.begin(), nums1.end());
+    vector<int> out;
+    for (int x : nums2)
+        if (s.erase(x))
+            out.push_back(x);
+    return out;
+}
+//
+
+
