@@ -1,0 +1,95 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+	ListNode *sortList(ListNode *head) {
+		if(!head || !(head->next)) return head;
+		
+		//get the linked list's length
+		ListNode* cur = head;
+		int length = 0;
+		while(cur){
+			length++;
+			cur = cur->next;
+		}
+		
+		ListNode dummy(0);
+		dummy.next = head;
+        //加个头结点在head前面，pre->next=head;
+		ListNode *left, *right, *tail;
+        //left // right // tail
+        
+		for(int step = 1; step < length; step <<= 1){
+			//左移一位，相当于乘二，作为merge()的步数
+            cur = dummy.next;
+            //指向head
+			tail = &dummy;
+            //指向dummy也就是pre结点
+			while(cur){
+				left = cur;
+                //
+				right = split(left, step);
+                //指针
+				cur = split(right,step);
+				tail = merge(left, right, tail);
+                //tail作为后一个的开始节点，连接成为指针
+			}
+		}
+		return dummy.next;
+	}
+private:
+	/**
+	 * Divide the linked list into two lists,
+     * while the first list contains first n ndoes
+	 * return the second list's head
+	 */
+	ListNode* split(ListNode *head, int n){
+		//if(!head) return NULL;
+        //调用这个的函数然后分成二分链表
+		for(int i = 1; head && i < n; i++) head = head->next;
+		//for()
+		if(!head) return NULL;
+        //
+		ListNode *second = head->next;
+        //头结点的下一个节点
+		head->next = NULL;
+        //head->next;
+        //赋值为null
+		return second;   
+	}
+	/**
+	  * merge the two sorted linked list l1 and l2,
+	  * then append the merged sorted linked list to the node head
+	  * return the tail of the merged sorted linked list
+	 */
+	ListNode* merge(ListNode* l1, ListNode* l2, ListNode* head){
+		ListNode *cur = head;
+        //cur = head;
+		while(l1 && l2){
+            //遍历l1 && l2 两个链表直到有一个是null
+			if(l1->val > l2->val){
+				//接下来l2
+                cur->next = l2;
+                //当前的结点后移
+				cur = l2;
+				l2 = l2->next;
+            //l2后移
+			}
+			else{
+				cur->next = l1;
+				cur = l1;
+				l1 = l1->next;
+			}
+		}
+		cur->next = (l1 ? l1 : l2);
+        //处理结尾
+		while(cur->next) cur = cur->next;
+		return cur;
+	}
+};
