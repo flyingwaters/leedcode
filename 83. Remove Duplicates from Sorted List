@@ -1,0 +1,20 @@
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+       if(head==NULL)return head;
+        ListNode* p = head;
+        int med_int;
+        med_int = p->val;
+        ///使用指针时要注意，pointer 不可以等于NULL，使用了->function,NULL时没有意义
+        
+        while(p->next != NULL)
+        {
+            if((p->next)->val==med_int)
+            {p->next = p->next->next;}
+            else{med_int=(p->next)->val;
+                p=p->next;}
+            
+        }
+        return head;
+    }
+};
