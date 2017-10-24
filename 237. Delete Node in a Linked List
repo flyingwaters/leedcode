@@ -1,0 +1,12 @@
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+        auto l = (node->next);
+        *node = *l;
+         delete l;
+        //struct ListNode的*函数是访问这个节点的struct node
+        //赋值了*node使得，node本节点的next变为next-》next于是断链，node。next失去链上位置
+       // 如果要释放
+        //auto l = *(node->next)  不可以直接释放node->next
+    }
+};
