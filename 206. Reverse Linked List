@@ -1,0 +1,36 @@
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* pre = NULL;
+        while (head) {
+            ListNode* next = head -> next;
+            head -> next = pre;
+            pre = head;
+            head = next;
+        } 
+        return pre;
+    }
+};
+*******************
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL||head->next==NULL)
+            return head;
+        auto pre = head;
+        auto nex=head->next;
+        auto nn = nex->next;
+        while(nn!=NULL)
+        {
+            nex->next = pre;
+            pre=nex;
+            nex = nn;
+            nn=nn->next;
+        }
+        nex->next=pre;
+        head->next=NULL;
+        return nex;
+    }
+};
+//////////////////
+两个解的分析，本质区别它以每次的倒转next的节点作为while循环的退出条件，然后退出直接满足了，返回条件并且对于特殊的情况，NULL和一个节点的考虑
