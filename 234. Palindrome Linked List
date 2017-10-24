@@ -1,0 +1,42 @@
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        //O(n)/O(1)
+        if(head==NULL)return true;
+        if(head->next==NULL)return true;
+        int count = 0;
+        auto p = head;
+        while(p)
+        {
+            count++;
+            p = p->next;
+        }
+        ListNode * tail = NULL;
+        p = head->next;
+        for(int i=0;i<count/2;i++)
+        {
+            head->next = tail;
+            tail = head;
+            head = p;
+            p = p->next;
+        }
+        ////validate
+        int d= count/2;
+        if(count%2==1)
+        {
+           return va(d,p,tail);
+        }
+        else{
+        return va(d,head,tail);
+        }
+    }
+    bool va(int n,auto &l,auto &o)
+    {
+           for(int i=0;i<n;i++,o=o->next,l=l->next)
+            {
+                if(o->val != l->val)
+                    return false;
+            }
+            return true;
+    }
+};
