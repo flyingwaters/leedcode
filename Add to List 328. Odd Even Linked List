@@ -1,0 +1,28 @@
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        //
+        if(head==nullptr)return head;
+        if(head->next == nullptr)return head;
+        ListNode* H = head;
+        ListNode* start;
+        auto mark = start;
+        int count = 0;
+        start = H->next;
+        mark = start;
+        ///注意点一，链表结构变化后不要认为此链表指针没有变化
+        ///注意点二，null指针不能使用next   H->next,一定要判断H是否位nullptr，包括H->next->next;
+        ///注意点三，特殊例子与一般的例子的驱动，特例驱动写出if排除，一般代表性的例子写一般程序
+        while(H)
+        {
+            if(H->next==nullptr)break;
+            if(H->next->next==nullptr)break;
+            H->next = H->next->next;
+            H = H->next;
+            start->next = start->next->next;
+            start = start->next;
+        }
+        H->next = mark;
+        return head;
+    }
+};
