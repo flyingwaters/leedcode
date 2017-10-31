@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int countBinarySubstrings(string s) {
+        //一般001101
+        int size = s.size();
+        int g = 0;
+      int iter = 0;
+        while(iter <size)
+        {
+            int j= iter;
+            int count_1 = 0;
+            while(s[j]==s[iter])
+            {
+                j++;
+            }
+            if(j>=size)break;
+            count_1 = j-iter;
+            int k = j;
+            while(s[k]==s[j])
+            {
+                k++;
+            }
+            int count_2 = k-j;
+            g+=count_1>count_2?count_2:count_1;
+            iter =j;
+        }
+       return g;
+    }
+};
+////////////////////////////////////
+思路是相同的，vetocr存入的统计的相同的01组，然后，每个相邻的组之间相互取较小的
+下面的思路显然更为清晰，使用第一遍统计特征量，第二遍计算，同时都为O(n)
+class Solution {
+public:
+    int countBinarySubstrings(string s) {
+        vector<int> rec;
+        int count = 1;
+        for(int i=1, n=s.size(); i<=n; ++i){
+        //for 同时初始化两个变量
+            if(s[i] == s[i-1]){
+                ++count;
+            }else{
+                rec.push_back(count);
+                count = 1;
+            }
+        }
+        int res = 0;
+        for(int i=1, n=rec.size(); i<n; ++i){
+            res += min(rec[i-1], rec[i]);
+        }
+        return res;
+    }
+};
