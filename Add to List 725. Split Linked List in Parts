@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* root, int k) {
+        vector<ListNode*> parts(k, nullptr);
+        int len = 0;
+        for (ListNode* node = root; node != nullptr; node = node->next)
+            len++;
+        //caculate the num of the nodes
+        int n = len / k, r = len % k; 
+        ListNode *node = root, *prev = nullptr;
+        for (int i = 0; i < k; i++, r--) {
+            parts[i] = node;
+            for (int j = 0; j < n + (r > 0); j++) {
+                prev = node;
+                node = node->next;
+            }
+            if (prev) prev->next = nullptr;
+            //initialize the vector<ListNode*> parts(k,nullptr); with the initialization
+            //每个链表后面都有nullptr作为结尾。
+        }
+        return parts;
+    }
+};
+/////此做法比较经典，initialize the vector as the mark of the LinkList spilt the parts.move the steps
+and catch the nullptr as the ending.
