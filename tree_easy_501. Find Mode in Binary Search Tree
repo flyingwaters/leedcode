@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int num=1;
+    vector<int> res;
+    vector<int> findMode(TreeNode* root) {
+        if(root == nullptr){return res;}
+        unordered_map<int,int> mark;
+        //备选集合
+        mark.insert(make_pair(root->val,0));
+        res.push_back(root->val);
+        //初始化
+        dfs(root,mark);
+        return res;
+        
+    }
+    void dfs(TreeNode* t,unordered_map<int,int> &o)
+    {
+     if(t==nullptr)return;//recursive method with leaf to export
+     if(o.find(t->val)!=o.end())
+     {
+         auto a = o.find(t->val);
+         a->second++;
+         if(a->second>num){
+                           res.clear();
+                           res.push_back(a->first);
+                           num=a->second;//limit the num to maximum;
+                          }
+         if(a->second == num){
+             if(find(res.begin(),res.end(),a->first)==res.end())
+                 res.push_back(a->first);
+         }
+     }
+     else{
+           o.insert(make_pair(t->val,1));
+                   if(num==1)res.push_back(t->val);
+     }
+        dfs(t->left,o);
+        dfs(t->right,o);
+    }
+    
+};
