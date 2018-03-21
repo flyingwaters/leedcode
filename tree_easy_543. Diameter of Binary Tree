@@ -72,4 +72,32 @@ int depth(TreeNode* root){
     return 1 + max(depth(root->left), depth(root->right));
 }
 };
-///////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+/求解递归过程中最大的，maxdiapeth即可，每一个子树都会更新比较这个全局变量，最后遍历结束时我们得到最优解。仅仅需要深度遍历一遍
+/
+/
+/
+/
+/
+/
+
+class Solution {
+public:
+    int maxdiadepth = 0;
+    
+    int dfs(TreeNode* root){        
+        if(root == NULL) return 0;
+        
+        int leftdepth = dfs(root->left);
+        int rightdepth = dfs(root->right);
+        
+        if(leftdepth + rightdepth > maxdiadepth) maxdiadepth = leftdepth + rightdepth;
+        return max(leftdepth +1, rightdepth + 1);     
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {        
+        dfs(root);
+        
+        return maxdiadepth;
+    }
+};
