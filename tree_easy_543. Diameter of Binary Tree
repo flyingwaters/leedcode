@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        return dfs(root);
+    }
+    //return the longest length
+    int dfs(TreeNode* root){
+        if(root == nullptr)return 0;
+        int left,right;
+        if(root->left == nullptr){
+            left = 0;
+        }
+        else{ left = cfs(root->left)+1; }
+        if(root->right == nullptr){
+            right = 0;
+        }
+        else{
+            right = cfs(root->right)+1;
+        }
+        int A = max(right+left,dfs(root->left));
+        return max(A,dfs(root->right));
+        
+    }
+    int cfs(TreeNode* root)
+    {
+        if(root==nullptr)return 0;
+        int res=-1;
+        queue<TreeNode*> q;
+        q.push(root);
+        //加入根节点
+        while(q.size())
+        {
+            res++;
+            int mark = q.size();
+            while(mark--)
+            {
+                auto a = q.front();
+                q.pop();
+                if(a->left!=nullptr){
+                    q.push(a->left);
+                }
+                if(a->right!=nullptr){
+                    q.push(a->right);
+                }
+            }     
+        }
+        return res;
+        //root __ 树的深度
+    }
+};
