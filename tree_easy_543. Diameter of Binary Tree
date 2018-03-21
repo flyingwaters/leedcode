@@ -57,3 +57,18 @@ public:
         //root __ 树的深度
     }
 };
+********************************************************************
+//深度遍历求depth；beat 19per，快了一些----while，理论复杂度应该是一样的
+class Solution {
+public:
+int diameterOfBinaryTree(TreeNode* root) {
+    if(root == nullptr) return 0;
+    int res = depth(root->left) + depth(root->right);
+    return max(res, max(diameterOfBinaryTree(root->left), diameterOfBinaryTree(root->right)));
+}
+
+int depth(TreeNode* root){
+    if(root == nullptr) return 0;
+    return 1 + max(depth(root->left), depth(root->right));
+}
+};
