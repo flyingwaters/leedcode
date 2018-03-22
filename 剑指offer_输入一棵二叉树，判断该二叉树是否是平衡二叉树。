@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool IsBalanced_Solution(TreeNode* pRoot) {
+         //BST
+        if(pRoot==nullptr)return true;
+        return abs(jd(pRoot->left)-jd(pRoot->right))<=1 && IsBalanced_Solution(pRoot->left) && IsBalanced_Solution(pRoot->right);
+          
+    }
+    int jd(TreeNode* r){
+        return max(jd(r->left),jd(r->right))+1;
+        if(r==nullptr)return -1;
+         
+    }
+};
+//////////////////////////////
+class Solution {
+public:
+    bool IsBalanced_Solution(TreeNode* pRoot) {
+         //BST
+        if(pRoot==nullptr)return true;
+        return abs(jd(pRoot->left)-jd(pRoot->right))<=1 && IsBalanced_Solution(pRoot->left) && IsBalanced_Solution(pRoot->right);
+         
+    }
+    int jd(TreeNode* r){
+        if(r==nullptr)return 0;
+        //特定的special case一定要先写，流程图中的先后顺序很重要
+        return max(jd(r->left),jd(r->right))+1;
+    }
+};
+//////
+递归出口要先写，这是if和else if的关系，因为有return 0；习惯上忽略else if；
+如果写到后面，是漏掉了逻辑关系，表达出的意思是完全不一样的。
+今天大脑木然的，写了上面的代码。。。。无法跑出结果。
