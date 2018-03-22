@@ -1,0 +1,42 @@
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    TreeNode* Convert(TreeNode* pRootOfTree)
+    {
+        if(pRootOfTree==nullptr)return nullptr;
+        TreeNode* pre = nullptr;
+        TreeNode* res  = pRootOfTree;
+        df(pRootOfTree,pre);
+        while(res->left)res = res->left;
+        return res;
+    }
+    void df(TreeNode* r,TreeNode*& pre)
+    {
+        //解决特例
+        //双向链表的头指针，一个指针left指前面，right指后面
+        if(r==nullptr)return;
+        df(r->left,pre);
+        r->left = pre;
+        //nullptr 初始
+        if(pre)pre->right = r;
+        pre = r;
+        
+        df(r->right,pre);
+    }
+};////////////////////////////////
+思路解析：
+二叉搜索树----二叉查找树
+中序遍历就是按升序排序----我们需要在中序遍历时进行指针的操作----这是没有问题的
+需要pre指针来进行，双向链表的链接。
+几种开始的例子：
+具体的分析，结合分析，当叶节点时，怎么办，当左叶节点缺失时怎么办；
+一般情况迭代过来能通吗，左子树缺失时怎么办，右子树缺失时怎么办。一次对代码的可行性进行分析。
+主要为pre指向为左子树最后一个节点，
