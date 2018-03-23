@@ -52,3 +52,31 @@ public:
         else{return true;}
     }
 };
+*************************************************************8
+/////////////递归的完美解法：定义一个函数检查两棵二叉树是否符合镜面。
+出口为：
+都为nullptr return;其中一个为nullptr return 两个root结点的->val不相等，return；
+除以上情况就是，两个root->val相等。这时return 两个孩子子树的交互判断。
+root节点满足了，若两个root的子树都满足的话就是满足。满足递归定义。。。
+递归如何实现？没想到
+
+
+
+class Solution {
+public:
+    bool isSymmetrical(TreeNode* pRoot)
+    {
+        return isSymmetrical(pRoot,pRoot);
+    }
+    bool isSymmetrical(TreeNode* pRoot1,TreeNode* pRoot2)
+    {
+        if(pRoot1==nullptr&&pRoot2==nullptr)
+            return true;
+        if(pRoot1==nullptr||pRoot2==nullptr)
+            return false;
+        if(pRoot1->val!=pRoot2->val)
+            return false;
+        return isSymmetrical(pRoot1->left,pRoot2->right)&& isSymmetrical(pRoot1->right,pRoot2->left);
+    }
+ 
+};
