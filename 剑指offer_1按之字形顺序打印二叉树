@@ -1,0 +1,55 @@
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    vector<vector<int> > Print(TreeNode* pRoot) {
+        vector<vector<int>> res;
+        if(pRoot==nullptr)return res;
+       stack<TreeNode*> l;
+        stack<TreeNode*> l2;
+        int high=0;
+        l.push(pRoot);
+        while(l.size()||l2.size())
+        {
+            if(high%2==0)
+            {
+                 vector<int> r;
+                    int mark = l.size();
+                    while(mark--)
+                    {
+                    auto a = l.top();
+                    l.pop();
+                    r.push_back(a->val);
+                    if(a->left)l2.push(a->left);
+                    if(a->right)l2.push(a->right);
+                    }
+                res.push_back(r);
+             }
+             if(high%2==1)
+             {
+                  vector<int> r;
+                 int mark = l2.size();
+                 while(mark--)
+                 {
+                     auto a = l2.top();
+                     l2.pop();
+                     r.push_back(a->val);
+                     if(a->right)l.push(a->right);
+                     if(a->left)l.push(a->left);
+                 }
+                 res.push_back(r);
+             }
+         high++;   
+        }
+    return res;
+    }
+    
+};
