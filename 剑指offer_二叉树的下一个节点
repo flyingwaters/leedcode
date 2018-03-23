@@ -1,0 +1,50 @@
+/*
+struct TreeLinkNode {
+    int val;
+    struct TreeLinkNode *left;
+    struct TreeLinkNode *right;
+    struct TreeLinkNode *next;
+    TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) {
+        
+    }
+};
+*/
+class Solution {
+public:
+    TreeLinkNode* GetNext(TreeLinkNode* pNode)
+    {  
+         
+        if(pNode->right!=nullptr)return fl(pNode->right);
+        else{
+            auto parent = pNode->next;
+            auto cur = pNode;
+            if(parent == nullptr)return nullptr;
+            if(parent->left == pNode)return parent;
+            else{
+                while(parent->right==cur){
+                    cur = parent;
+                    parent =cur->next;
+                     if(parent==nullptr)return nullptr;
+                } 
+                return parent;
+                
+            }
+        }
+        
+        
+        
+    }
+    typedef TreeLinkNode* N;
+        //找到中序的第一个的节点。
+    N fl(N root){
+        if(root->left)return fl(root->left);
+        else{
+            return root;
+        }
+    }
+};
+//////////////////////////////
+每种特殊情况的用例驱动。一旦逻辑没问题，大多数是用例驱动的问题。如何解决用例驱动的问题，一次性通过test，未完待解。。。。。争取下一题细分用例情况。
+
+
+
