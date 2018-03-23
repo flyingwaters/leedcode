@@ -1,0 +1,54 @@
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    bool isSymmetrical(TreeNode* pRoot)
+    {
+         if(pRoot==nullptr)return true;
+         if(pRoot->left==nullptr&&pRoot->right==nullptr)return true;
+         if((pRoot->left==nullptr&&pRoot!=nullptr)||(pRoot->left!=nullptr&&pRoot==nullptr))return false;
+       return isBool(pRoot);
+    }
+    bool isBool(TreeNode* r){
+         queue<TreeNode*> left;
+         queue<TreeNode*> right;
+         left.push(r->left);
+         right.push(r->right);
+         while(left.size()!=0)
+         {
+             if(left.size()!=right.size())return false;
+             auto a = left.front();
+             auto b = right.front();
+             if(a!=b)
+             {
+              if(a==nullptr||b==nullptr)return false;
+             if(left.front()->val!=right.front()->val)
+             {
+                     return false;
+             }
+             }
+             
+             left.pop();
+             right.pop();
+             if(a!=nullptr)
+             if(a->left||a->right||b->left||b->right)
+             {
+             left.push(a->left);
+             left.push(a->right);
+             right.push(b->right);
+             right.push(b->left);
+             }
+             
+         }
+        if(left.size()!=right.size())return false;
+        else{return true;}
+    }
+};
