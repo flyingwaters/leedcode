@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+         if(root==nullptr)return false;
+         return findSum(root,root,k);
+    }
+    //找到一个节点值为k，没找到返回false；
+    bool findSum(TreeNode* root,TreeNode* r,int sum){
+         if(r==nullptr)return false;
+         return findNode(root,r,sum-r->val)||findSum(root,r->left,sum)||findSum(root,r->right,sum);
+    }
+    bool findNode(TreeNode* root,TreeNode* r,int sum){
+         if(root==nullptr)return false;
+         if(root==r){
+             if(r->val>sum)return findNode(root->left,r,sum);
+             else{return findNode(root->right,r,sum);}
+         }
+         if(root->val==sum)return true;
+         else if(root->val>sum)return findNode(root->left,r,sum);
+         else if(root->val<sum)return findNode(root->right,r,sum);
+    }    
+};
+///////////////////////////
+Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to the given target.
+有负值的节点。和只有正数节点处理不一样。
+/////////
+抽象为，查找每一个能否找到一个点和他相加为sum，且这个点不能为本身。
+首先遍历一遍二叉树，然后每个点查找有否结果相等，结果取或，递归方式返回。
