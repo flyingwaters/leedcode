@@ -1,0 +1,45 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    /*
+    测试多种秦情况的rubost;
+    1:null+root+right
+    2:null+root+null
+   故而去全部情况理论上可以通过。
+    */
+    TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
+              int len = vin.size();
+              if(len==0)return nullptr;
+              TreeNode* head = new TreeNode(pre[0]);
+              ///size()==0,pre[0]无法返回
+              int root = pre[0];
+              int rMark;
+              for(int i =0;i<len;i++){
+                  if(vin[i]==pre[0]){
+                      rMark = i;
+                      break;
+                  }
+              }
+              vector<int> left_in,left_pre,right_in,right_pre;
+              for(int i=0;i<rMark;i++)
+              {
+                  left_in.push_back(vin[i]);
+                  left_pre.push_back(pre[i+1]);
+              }
+              for(int j=rMark+1;j<len;j++){
+                  right_in.push_back(vin[j]);
+                  right_pre.push_back(pre[j]);
+              }
+              head->left = reConstructBinaryTree(left_pre,left_in);
+              head->right = reConstructBinaryTree(right_pre,right_in);
+              return head;
+    }
+};
