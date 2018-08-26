@@ -1,0 +1,29 @@
+//*
+无序的序列，计算target的，坐标vector<int> res;
+
+/////关键点在于1：建立一个unordered_map<int> l;unordered_map<> --->hashtable是底层建立，查找速度极快---》map,avl，红黑树
+map 有序的平衡二叉树，每个操作都是对于一个AVL的一个节点的操作。
+unordered_map<>-->hashtable操作，重载了[]这个符号~作为整体的索引
+2：也就是说，如果用 operator[] 去搜索值，如果对应的key不存在，就会自动插入一个，对应的value会调用其默认构造函数。
+所以说如果不确定某个key是否存在，要先用 unordered_map::find 去找，找到了再搜索对应值。不然就会在不经意间改变整个unordered_map。
+3：边对这个unordered_map<> 进行初始化边进行的查找，如果一旦有结果就会返回然后，减少了时间复杂度。虽然是同一个量级。总量减少
+*///
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> complement;
+        
+        int size = nums.size();
+        for(int index = 0; index < size; ++index){
+            auto iterator = complement.find(target-nums[index]);
+            //auto iterator == complement.find(target-nums[index]);
+            //if 找的到返回iterator作为，索引，否则返回complement.end();
+            if(iterator != complement.end()) return {iterator->second,index};
+            
+            complement[nums[index]] = index;
+            //也就是说，如果用 operator[] 去搜索值，如果对应的key不存在，就会自动插入一个，对应的value会调用其默认构造函数。
+
+//所以说如果不确定某个key是否存在，要先用 unordered_map::find 去找，找到了再搜索对应值。不然就会在不经意间改变整个unordered_map。
+        }
+    }
+};
