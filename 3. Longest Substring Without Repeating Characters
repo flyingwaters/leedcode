@@ -1,0 +1,32 @@
+3. Longest Substring Without Repeating Characters
+
+Given a string, find the length of the longest substring without repeating characters.
+///
+///
+///
+
+
+class Solution {
+public:
+    //字符串求不重复的最长字符串
+    // 以字符为单位遍历---》为求长度 index - start = length
+    // 一个用于记录出现次数的vector<int> record(256, -1);ascII 256个字符。
+    // if record()
+   int lengthOfLongestSubstring(string s) {
+        vector<int> dict(256, -1);
+        //256 完整表ASCII 
+        int maxLen = 0, start = -1;
+        //最大长度和开始位置
+        for (int i = 0; i != s.length(); i++) {
+        //index -（-1）
+        //对应一个字典 dict[ s[i] ] == -1 第一次 or 第二次 
+            if (dict[s[i]] > start)
+                start = dict[s[i]];            
+            dict[s[i]] = i;
+        // 若不等于-1为 出现过，赋值本次的index
+            maxLen = max(maxLen, i - start);
+            //更新maxLen = max(maxLen, i - start);
+        }
+        return maxLen;
+    }
+};
