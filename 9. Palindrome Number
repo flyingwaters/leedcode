@@ -1,0 +1,24 @@
+//num%=10 --> 分离个位数
+//num/=10 --> 去掉最后一位  ---> 使用%10 可迭代
+/*
+new_int = 上一个循环×10+本循环
+while(截止条件为 y>0)
+*/
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        
+        if (x == 0) return true;
+        
+        if (x < 0 || x%10 == 0) return false;
+        //特殊的两种情况
+        int new_x = 0, y = x;
+        //一个 0 开始的递推迭代过程
+        while (y > 0){
+            // 数字逆向数字～求得后，进行比较
+            new_x = new_x*10 + y%10; 
+            y = y/10;
+        }
+        return x == new_x; 
+    }
+};
